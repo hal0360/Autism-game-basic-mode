@@ -376,7 +376,7 @@
 
             #ok2 {
             position: absolute;
-            top: 90%;
+            top: 88%;
             left: 40%;
             display: none;
             height: 10%;
@@ -495,7 +495,7 @@
     <div id="divide"></div>
     <div id="menuBox">
         <button id="addSymbol" class="menuButton" style="top: 18%; left: 10%;">Add content</button>
-        <button id="clearScreen" class="menuButton" style="top: 36%; left: 10%;">Clear screen</button>
+        <button id="clearScreen" class="menuButton" style="top: 36%; left: 10%;">Clear current</button>
         <button id="deleteFile" class="menuButton" style="top: 54%; left: 10%;">Delete files</button>
         <button id="exxit" class="menuButton" style="top: 72%; left: 10%;">Exit game</button>
         <div class="arrow" id="right"></div>
@@ -556,7 +556,7 @@
         exxit.addEventListener("MSPointerUp", quitt, false);
         addSymbol.addEventListener("MSPointerUp", addit, false);
         swap.addEventListener("MSPointerUp", swapRole, false);
-        // clearScreen.addEventListener("MSPointerUp", clearAll, false);
+        clearScreen.addEventListener("MSPointerUp", clearCur, false);
         menuBox.addEventListener('animationend', stoppu, false);
         undo.addEventListener('MSPointerDown', UndoMove, false);
         undo.addEventListener('MSPointerUp', Undo, false);
@@ -581,6 +581,7 @@
             sentence.player2.role = aaa;
 
             if (sentence.player1.role === "A") {
+                levels = 0;
                 loopJson(jsonData.answer[levels], 0, symbols);
                 loopJson(jsonData.question[levels], 0, symbols2);
 
@@ -595,6 +596,7 @@
 
             }
             else {
+                levels = 0;
                 loopJson(jsonData.answer[levels], 0, symbols2);
                 loopJson(jsonData.question[levels], 0, symbols);
 
@@ -638,6 +640,14 @@
                }
 
             );
+        }
+
+        function clearCur() {
+
+            jsonData.question[levels] = [];
+            jsonData.answer[levels] = [];
+            loopJson([], 0, symbols2);
+            loopJson([], 0, symbols);
         }
 
         function loopJson(js, inin, arr) {
@@ -899,6 +909,7 @@
                     imb.style.opacity = "0.3";
                 }
             }
+
             for (j = 1; j < 3; j += 1) {
                 for (i = 8; i < 15; i += 1) {
                     imb = document.createElement("div");
@@ -1040,8 +1051,6 @@
                 for (ty = 0; ty < symbols2.length; ty += 1) {
                     symbols2[ty].style.opacity = "0.3";
                 }
-
-
 
                 if (sentence.player1.role === "Q") {
                     sentence.player1.senten = [];
