@@ -235,25 +235,25 @@
             position: absolute;
             top: 58%;
             left: 94%;
-            height: 40px;
+            height: 50px;
             width: 9%;
             background: linear-gradient(#CBC5EE, #796AD2);
             box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
         }
         #arrow-left {
             position: absolute;
-            width: 28.2842712475px;
-            height: 28.2842712475px;
-            left: -14px;
-            top: 5.85px;
+            width: 35.3553390593px;
+            height: 35.3553390593px;
+            left: -17px;
+            top: 7px;
             background: linear-gradient(135deg, #CBC5EE, #796AD2);
             transform: rotate(45deg);
         }
         #Untext {
             position: absolute;
-            left: 15px;
-            top: -6px;
-            font: bold 18px Arial, Helvetica;
+            left: 10px;
+            top: -17px;
+            font: bold 28px Arial, Helvetica;
             color: #F0FFFF;
             -ms-touch-select: none;
             -ms-user-select: none;
@@ -288,7 +288,6 @@
             position: absolute;
             color: red;
             font: bold 14px Arial, Helvetica;
-            display: none;
         }
         #garbage {
             position: absolute;
@@ -307,7 +306,7 @@
             z-index: 2000;
             box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
             animation-duration: 0.6s;
-            animation-timing-function: linear;
+            animation-timing-function: ease;
             text-align: center;
             color: blue;
             font: bold 30px Arial, Helvetica;
@@ -317,16 +316,31 @@
             position: absolute;
             top: 60%;
             left: 60%;
+            width: 30%;
+            height: 20%;
+
         }
         #popNO{
             position: absolute;
             top: 60%;
-            left: 35%;
+            left: 10%;
+            width: 30%;
+            height: 20%;
+        }
+        #bigblock{
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            z-index: 1999;
+            display: none;
         }
     </style>
 </head>
 <body onload="powerup()">
     <div id="popup"><br><br>Are you sure?<button id="popNO" onpointerup="OKdelete(this)">NO</button><button id="popOK" onpointerup="OKdelete(this)">YES</button></div>
+    <div id="bigblock"></div>
     <button id="player1" onpointerup="swapColor(this)" class="playerBall" style="left: 3%;">Question</button>
     <button id="player2" onpointerup="swapColor(this)" class="playerBall" style="left: 88%;">Answer</button>
     <div id="tableBox"></div>
@@ -334,7 +348,7 @@
     <div id="blocky"></div>
     <button id="hideBox" onpointerup="bring(this)">MENU</button>
     <div id="menuBox">
-        <p id="warning" style="top: 47%; left: 10%;">Provide a picture and a name</p>
+        <p id="warning" style="top: 44%; left: 10%;"></p>
         <button id="addSymbol" onpointerup="cancel('none','inline')" class="menuButton" style="top: 18%; left: 10%;">Add content</button>
         <button id="clearScreen" onpointerup="clearCur()" class="menuButton" style="top: 36%; left: 10%;">Clear current</button>
         <button id="deleteFile" class="menuButton" style="top: 54%; left: 10%;">Delete files</button>
@@ -366,15 +380,27 @@
         var dragIds = {}, idd = 0, conColor = "purple", tableLeft = tableBox.offsetLeft, tableTop = tableBox.offsetTop;
         var tableWidth = tableBox.clientWidth, tableHeight = tableBox.clientHeight;
         var binWidth = garbage.clientWidth, binHeight = garbage.clientHeight;
-        var binLeft = garbage.offsetLeft, binTop = garbage.offsetTop;
+        var binLeft = garbage.offsetLeft, binTop = garbage.offsetTop, conBoxHei = conversations[1].clientHeight;
         var symWidth = sentence.player1.symbols[0].clientWidth / 2, symHeight = sentence.player1.symbols[0].clientHeight / 2;
         for (var kol = 0; kol < 24; kol += 1) sentence.player1.symbols[kol].style.opacity = "1.0";
         for (var fol = 0; fol < 24; fol += 1) sentence.player2.symbols[fol].style.opacity = "0.3";
 
         undo.addEventListener('MSPointerDown', UndoMove, false);
-        undo.addEventListener('MSPointerUp', Undo, false);
+        undo.addEventListener('MSPointerOut', Undo, false);
 
         document.onselectstart = function () { return false; }
+
+       
+        if (document.body.clientWidth > 1500) {
+            player1.style.font = "bold 27px Arial, Helvetica";
+            player2.style.font = "bold 27px Arial, Helvetica";
+            swap.style.font = "bold 27px Arial, Helvetica";
+        }
+        else if (document.body.clientWidth > 1700) {
+            player1.style.font = "bold 36px Arial, Helvetica";
+            player2.style.font = "bold 36px Arial, Helvetica";
+            swap.style.font = "bold 36px Arial, Helvetica";
+        }
 
         function UndoMove() {
             this.style.left = "92%";
@@ -418,11 +444,14 @@
         }
 
         function clearCur() {
-
-            jsonData.question[levels] = [];
-            jsonData.answer[levels] = [];
-            loopJson([], 0, sentence.player2.symbols);
-            loopJson([], 0, sentence.player1.symbols);
+            jsonData.question.splice(levels,1);
+            jsonData.answer.splice(levels, 1);
+            if (jsonData.question.length <= levels) {
+                jsonData.answer.push([]);
+                jsonData.question.push([]);
+            }
+            loopJson(jsonData.answer[levels], 0, sentence.player2.symbols);
+            loopJson(jsonData.question[levels], 0, sentence.player1.symbols);
         }
 
         function loopJson(js, inin, arr) {
@@ -489,12 +518,15 @@
         }
 
         var levels = 0;
-
         function accept(sect1) {
-            warning.style.animationName = "";
+            warning.innerHTML = "";
             var symblName = imageName.value.trim();
             if (symblName === "" || tempData === "") {
-                warning.style.animationName = "fade";
+                warning.innerHTML = "Enter a name and upload an picture";
+                return;
+            }
+            if (jsonData[sect1][levels].length >= 24) {
+                warning.innerHTML = "It's full!!";
                 return;
             }
             if (sentence.player1.role === sect1) sentence.player1.symbols[jsonData[sect1][levels].length].appendChild(createSub(symblName, tempData, "sym"));
@@ -624,7 +656,7 @@
 
             tableBox.innerHTML = "";
                 conversations = [];
-            putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, 11, 13, 1, "socket", tableBox, 1)
+                putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, 11, 13, 1, "socket", tableBox, 1);
             XX = 12;
             YY = 11;
             conIndex = 1;
@@ -659,6 +691,7 @@
                 loopJson(jsonData[sentence[turn].role][levels], 0, sentence[turn].symbols);
             }
             popup.style.display = "none";
+            bigblock.style.display = "none";
             popup.style.animationName = "";
         }
         
@@ -667,6 +700,7 @@
             if (event.pageX >= binLeft && event.pageX <= binLeft + binWidth && event.pageY >= binTop && event.pageY <= binTop + binHeight) {
                 tempDelete = this.title;
                 popup.style.display = "inline";
+                bigblock.style.display = "inline";
                 popup.style.animationName = "zoom";
                 delete dragIds[this.id];
                 document.body.removeChild(this);
@@ -675,7 +709,9 @@
             if (event.pageX >= tableLeft && event.pageX <= tableLeft + tableWidth && event.pageY >= tableTop && event.pageY <= tableTop + tableHeight) {           
                 conversations[conIndex - 1].appendChild(createSub(this.name, this.src, "sock"));
                 conversations[conIndex - 1].childNodes[0].style.border = "2px " + conColor + " solid";
-                //conversations[conIndex - 1].scrollIntoView();
+
+                tableBox.scrollTop = conversations[conIndex - 1].offsetTop - conBoxHei*1.6;
+
                 conIndex += 1;
                 if (conIndex > 120) {
                     putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, XX, 13, 1, "socket", tableBox, YY)
