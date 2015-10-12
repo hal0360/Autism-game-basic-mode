@@ -1,0 +1,15 @@
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bin\Debug\ReverseMap\resources.pri
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bin\Debug\AppxManifest.xml
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bin\Debug\TalkToMeGame.Windows.build.appxrecipe
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\priconfig.xml
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\priconfig.xml.intermediate
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\layout.resfiles
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\layout.resfiles.intermediate
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\resources.resfiles
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\resources.resfiles.intermediate
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\pri.resfiles
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\pri.resfiles.intermediate
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\qualifiers.txt
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\qualifiers.txt.intermediate
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\MultipleQualifiersPerDimensionFound.txt
+c:\users\acer\documents\visual studio 2015\Projects\TalkToMeGame\TalkToMeGame\TalkToMeGame.Windows\bld\Debug\ProjectArchitectures.txt

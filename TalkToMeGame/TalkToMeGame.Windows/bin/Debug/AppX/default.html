@@ -1,0 +1,762 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <style>
+        html {
+            -ms-content-zooming: none;
+            -ms-touch-action: none;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #menuBox {
+            overflow: hidden;
+            position: absolute;
+            height: 5%;
+            width: 3.8%;
+            z-index: 999;
+            left: 0%;
+            top: 0%;
+            background: linear-gradient(to right, #32CD32, #7CFC00, #32CD32);
+            box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
+            animation-duration: 0.5s;
+            animation-timing-function: ease;
+        }
+
+        .menuButton {
+            position: absolute;
+            border: 2px #808080 solid;
+            height: 10%;
+            width: 80%;
+            border-radius: 100px;
+            background: linear-gradient(#E6E6FA, #A9A9A9);
+            color: purple;
+            font: bold 14px Arial, Helvetica;
+        }
+
+            .menuButton:active {
+                background: yellow;
+            }
+
+        .box {
+            position: absolute;
+            width: 6.5%;
+            height: 10%;
+            border-radius: 8%;
+            border: 1px dotted red;
+        }
+
+        .sub {
+            overflow: hidden;
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 100%;
+            height: 100%;
+            border: 1px red solid;
+            border-radius: 8%;
+            animation: flip 1s;
+        }
+
+        .socksub {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 100%;
+            height: 100%;
+            animation: flop 1s;
+        }
+
+        .symImg {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 80%;
+        }
+
+        .symTxt {
+            position: absolute;
+            top: 76%;
+            left: 0%;
+            width: 100%;
+            text-align: center;
+            background: white;
+        }
+
+        .starImg {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            animation: twinkle 2s;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes bringUp {
+            from {
+                height: 5%;
+                width: 3.8%;
+            }
+
+            to {
+                height: 44.5%;
+                width: 15%;
+            }
+        }
+
+        @keyframes bringOut {
+            from {
+                height: 44.5%;
+                width: 15%;
+            }
+
+            to {
+                height: 5%;
+                width: 3.8%;
+            }
+        }
+
+        @keyframes flop {
+            from {
+                transform: rotateY(270deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        @keyframes flip {
+            from {
+                transform: rotateX(270deg);
+            }
+
+            to {
+                transform: rotateX(360deg);
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0.2);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        #swap {
+            position: absolute;
+            border-radius: 8px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+            height: 7%;
+            width: 7%;
+            font: bold 17px Arial, Helvetica;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .swapEnable {
+            border: 2px double #FFC680;
+            background: linear-gradient(#FFB459 50%, #FF9D26 50%);
+            color: blue;
+            opacity: 1;
+        }
+
+            .swapEnable:active {
+                background: yellow;
+                color: red;
+            }
+
+        .swapDisable {
+            border: 2px double #939393;
+            background: linear-gradient(#ACACAC, #ECECEC);
+            color: grey;
+            opacity: 0.9;
+        }
+
+        #tableBox {
+            position: absolute;
+            left: 1%;
+            top: 46%;
+            border: 5px #1E90FF ridge;
+            width: 97%;
+            height: 52%;
+            overflow-y: scroll;
+        }
+
+        .socket {
+            position: absolute;
+            border: 2px #191970 dotted;
+            width: 7.2%;
+            height: 20%;
+        }
+
+        #fake {
+            position: absolute;
+            top: 4%;
+            left: 28%;
+            display: none;
+            height: 25%;
+            width: 55%;
+            border: 1px black inset;
+            background: #E0FFFF;
+            text-align: center;
+            color: brown;
+            font: bold 14px Arial, Helvetica;
+        }
+
+        #selImage {
+            position: absolute;
+            top: 4%;
+            left: 28%;
+            opacity: 0;
+            display: none;
+            height: 25%;
+            width: 55%;
+        }
+
+        #imageName {
+            position: absolute;
+            top: 38%;
+            left: 10%;
+            display: none;
+            height: 7%;
+            width: 80%;
+        }
+
+        #minder {
+            position: absolute;
+            top: 28%;
+            left: 10%;
+            display: none;
+            color: brown;
+            font: bold 14px Arial, Helvetica;
+        }
+
+        .playerBall {
+            position: absolute;
+            width: 10%;
+            top: 2.8%;
+            border: none;
+            font: bold 18px Arial, Helvetica;
+            color: #F0FFFF;
+            border-radius: 600px;
+        }
+
+            .playerBall:active {
+                box-shadow: 1px 1px 30px blue;
+            }
+
+        #undo {
+            position: absolute;
+            top: 58%;
+            left: 94%;
+            height: 50px;
+            width: 9%;
+            background: linear-gradient(#CBC5EE, #796AD2);
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        #arrow-left {
+            position: absolute;
+            width: 35.3553390593px;
+            height: 35.3553390593px;
+            left: -17px;
+            top: 7px;
+            background: linear-gradient(135deg, #CBC5EE, #796AD2);
+            transform: rotate(45deg);
+        }
+
+        #Untext {
+            position: absolute;
+            left: 10px;
+            top: -17px;
+            font: bold 28px Arial, Helvetica;
+            color: #F0FFFF;
+            -ms-touch-select: none;
+            -ms-user-select: none;
+        }
+
+        #blocky {
+            position: absolute;
+            width: 50%;
+            height: 46%;
+            top: 0%;
+            z-index: 500;
+        }
+
+        #divide {
+            position: absolute;
+            width: 0.5%;
+            height: 46%;
+            background: #1E90FF;
+            top: 0%;
+            left: 49.75%;
+        }
+
+        #hideBox {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 3.8%;
+            height: 5%;
+            z-index: 1000;
+            background: green;
+            font: bold 12px Arial, Helvetica;
+            color: #F0FFFF;
+        }
+
+        #warning {
+            position: absolute;
+            color: red;
+            font: bold 14px Arial, Helvetica;
+        }
+
+        #garbage {
+            position: absolute;
+            top: 74%;
+            left: 93%;
+            width: 7%;
+            height: 15%;
+        }
+
+        #popup {
+            position: absolute;
+            top: 20%;
+            left: 35%;
+            width: 30%;
+            height: 40%;
+            background: pink;
+            z-index: 2000;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+            animation-duration: 0.6s;
+            animation-timing-function: ease;
+            text-align: center;
+            color: blue;
+            font: bold 30px Arial, Helvetica;
+            display: none;
+        }
+
+        #popOK {
+            position: absolute;
+            top: 60%;
+            left: 60%;
+            width: 30%;
+            height: 20%;
+        }
+
+        #popNO {
+            position: absolute;
+            top: 60%;
+            left: 10%;
+            width: 30%;
+            height: 20%;
+        }
+
+        #bigblock {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            z-index: 1999;
+            display: none;
+        }
+    </style>
+</head>
+<body onload="powerup()">
+    <div id="popup"><br><br>Are you sure?<button id="popNO" onpointerup="OKdelete(this)">NO</button><button id="popOK" onpointerup="OKdelete(this)">YES</button></div>
+    <div id="bigblock"></div>
+    <button id="player1" onpointerup="swapColor(this)" class="playerBall" style="left: 3%;">Question</button>
+    <button id="player2" onpointerup="swapColor(this)" class="playerBall" style="left: 88%;">Answer</button>
+    <div id="tableBox"></div>
+    <div id="divide"></div>
+    <div id="blocky"></div>
+    <button id="hideBox" onpointerup="bring(this)">MENU</button>
+    <div id="menuBox">
+        <p id="warning" style="top: 44%; left: 10%;"></p>
+        <button id="addSymbol" onpointerup="cancel('none','inline')" class="menuButton" style="top: 18%; left: 10%;">Add content</button>
+        <button id="clearScreen" onpointerup="clearCur()" class="menuButton" style="top: 36%; left: 10%;">Clear current</button>
+        <button id="deleteFile" class="menuButton" style="top: 54%; left: 10%;">Delete files</button>
+        <button id="exxit" onpointerup="quitt()" class="menuButton" style="top: 72%; left: 10%;">Exit game</button>
+        <div id="fake"><span>Tap here to upload an image</span></div>
+        <input id="imageName" type="text" />
+        <input id="selImage" onchange="handleFileSelection(this)" type="file" />
+        <button id="ok2" class="menuButton" style="display: none; top: 73%; left: 10%;" onpointerup="accept('answer')">Add to answer</button>
+        <button id="ok" class="menuButton" style="display: none; top: 60%; left: 10%;" onpointerup="accept('question')">Add to question</button>
+        <button id="no" class="menuButton" style="display: none; top: 86%; left: 10%;" onpointerup="cancel('inline','none')">Back</button>
+        <p id="minder">Name of the symbol:</p>
+    </div>
+    <button id="swap" onpointerup="swapRole()" class="control" style="top: 90%; left: 45%;">SWAP</button>
+    <div id="undo"><div id="arrow-left"></div><p id="Untext">Undo</p></div>
+    <img id="garbage" src="images/bin2.png" />
+    <script>
+        var localFolder = Windows.Storage.ApplicationData.current.localFolder;
+        var sentence = { "player1": { "role": "question", "senten": [], "symbols": [], "other": "player2" }, "player2": { "role": "answer", "senten": [], "symbols": [], "other": "player1" } }, conStop = 1;
+        var conversations = [], turn = "player1", senten = [];
+        putup(sentence.player1.symbols, 14, 0.5, 6.5, 0, 1, 10, 3, 6, 1, "box", document.body,1)
+        putup(sentence.player1.symbols, 0, 0.5, 6.5, 22, 1, 10, 3, 8, 1, "box", document.body,1)
+        putup(sentence.player2.symbols, 15.5, 0.5, 6.5, 0, 1, 10, 3, 11, 6, "box", document.body,1)
+        putup(sentence.player2.symbols, 1.5, 0.5, 6.5, 22, 1, 10, 3, 15, 8, "box", document.body,1)
+        putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, 11, 13, 1, "socket", tableBox,1)
+        var YY = 11, XX = 12;
+        //putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, 12, 13, 1, "socket", tableBox,11)
+        var symIndex = 1, conIndex = 1, tempData = "", jsonData, dataIndex = 0, backToHome, homeIcon, backPage;
+        var dragIds = {}, idd = 0, conColor = "purple", tableLeft = tableBox.offsetLeft, tableTop = tableBox.offsetTop;
+        var tableWidth = tableBox.clientWidth, tableHeight = tableBox.clientHeight;
+        var binWidth = garbage.clientWidth, binHeight = garbage.clientHeight;
+        var binLeft = garbage.offsetLeft, binTop = garbage.offsetTop, conBoxHei = conversations[1].clientHeight;
+        var symWidth = sentence.player1.symbols[0].clientWidth / 2, symHeight = sentence.player1.symbols[0].clientHeight / 2;
+        for (var kol = 0; kol < 24; kol += 1) sentence.player1.symbols[kol].style.opacity = "1.0";
+        for (var fol = 0; fol < 24; fol += 1) sentence.player2.symbols[fol].style.opacity = "0.3";
+        undo.addEventListener('MSPointerDown', UndoMove, false);
+        undo.addEventListener('MSPointerOut', Undo, false);
+        document.onselectstart = function () { return false; }
+
+        if (document.body.clientWidth > 1500) {
+            player1.style.font = "bold 27px Arial, Helvetica";
+            player2.style.font = "bold 27px Arial, Helvetica";
+            swap.style.font = "bold 27px Arial, Helvetica";
+        }
+        else if (document.body.clientWidth > 1700) {
+            player1.style.font = "bold 36px Arial, Helvetica";
+            player2.style.font = "bold 36px Arial, Helvetica";
+            swap.style.font = "bold 36px Arial, Helvetica";
+        }
+        function UndoMove() {
+            this.style.left = "92%";
+        }
+        function swapRole() {
+            var vvv = player1.innerHTML, joo;
+            player1.innerHTML = player2.innerHTML;
+            player2.innerHTML = vvv;
+            var aaa = sentence.player1.role;
+            sentence.player1.role = sentence.player2.role
+            sentence.player2.role = aaa;
+            aaa = player1.style.background;
+            player1.style.background = player2.style.background;
+            player2.style.background = aaa;
+            levels = 0;
+            loopJson(jsonData[sentence.player1.role][levels], 0, sentence.player1.symbols);
+            loopJson(jsonData[sentence.player2.role][levels], 0, sentence.player2.symbols);
+            vvv = sentence.player1.symbols[1].style.opacity;
+            for (joo = 0; joo < 24; joo += 1) sentence.player1.symbols[joo].style.opacity = sentence.player2.symbols[1].style.opacity;
+            for (joo = 0; joo < 24; joo += 1) sentence.player2.symbols[joo].style.opacity = vvv;
+            if (blocky.style.left === "50%") { blocky.style.left = "0%"; }
+            else { blocky.style.left = "50%"; }
+            if (turn === "player1") turn = "player2";
+            else turn = "player1";
+            clearAll();
+        }
+        function powerup() {
+            localFolder.getFileAsync("saves.txt").done(function (sampleFile) {
+                return Windows.Storage.FileIO.readTextAsync(sampleFile).then(function (data) {
+                    jsonData = JSON.parse(data);
+                    loopJson(jsonData.answer[0], 0, sentence.player2.symbols);
+                    loopJson(jsonData.question[0], 0, sentence.player1.symbols);
+                });
+            }, function () {
+                jsonData = { "question": [[]] };
+                jsonData["answer"] = [[]];
+            }
+            );
+        }
+        function clearCur() {
+            jsonData.question.splice(levels,1);
+            jsonData.answer.splice(levels, 1);
+            if (jsonData.question.length <= levels) {
+                jsonData.answer.push([]);
+                jsonData.question.push([]);
+            }
+            loopJson(jsonData.answer[levels], 0, sentence.player2.symbols);
+            loopJson(jsonData.question[levels], 0, sentence.player1.symbols);
+        }
+        function loopJson(js, inin, arr) {
+            for (var ff = 0 ; ff < 24 ; ff += 1) {
+                arr[ff].innerHTML = "";
+            }
+            for (var i = inin; i < js.length; i += 1) {
+                if (i === arr.length) {
+                    return;
+                }
+                arr[i].appendChild(createSub(js[i].name, js[i].content, "sym"));
+            }
+        }
+        function quitt() {
+            localFolder.createFileAsync("saves.txt", Windows.Storage.CreationCollisionOption.replaceExisting).then(function (sampleFile) {
+                return Windows.Storage.FileIO.writeTextAsync(sampleFile, JSON.stringify(jsonData));
+            }).done(function () {
+                window.close();
+            });
+        }
+        function Undo() {
+            if (senten.length > 0) {
+                conIndex -= 1;
+                conversations[conIndex - 1].innerHTML = "";
+                senten.pop();
+                if (senten.length == 0) {
+                    if (sentence[turn].role === "question") {
+                        swap.className = "swapEnable";
+                        swap.disabled = false;
+            }}}
+            this.style.left = "94%";
+        }
+        function bring(e) {
+            if (e.innerHTML === "MENU") {
+                menuBox.style.animationName = "bringUp";
+                e.innerHTML = "HIDE";
+                menuBox.style.width = "15%";
+                menuBox.style.height = "44.5%";
+            }
+            else {
+                menuBox.style.animationName = "bringOut";
+                e.innerHTML = "MENU";
+                menuBox.style.width = "3.8%";
+                menuBox.style.height = "5%";
+            }
+        }
+        function handleFileSelection(evt) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var tempimg = document.createElement("img");
+                tempData = e.target.result;
+                tempimg.src = tempData;
+                tempimg.style.width = "100%";
+                tempimg.style.height = "100%";
+                fake.innerHTML = "";
+                fake.appendChild(tempimg);
+            }
+            reader.readAsDataURL(evt.files[0]);
+        }
+        var levels = 0;
+        function accept(sect1) {
+            warning.innerHTML = "";
+            var symblName = imageName.value.trim();
+            if (symblName === "" || tempData === "") {
+                warning.innerHTML = "Enter a name and upload an picture";
+                return;
+            }
+            if (jsonData[sect1][levels].length >= 24) {
+                warning.innerHTML = "It's full!!";
+                return;
+            }
+            if (sentence.player1.role === sect1) sentence.player1.symbols[jsonData[sect1][levels].length].appendChild(createSub(symblName, tempData, "sym"));
+            else sentence.player2.symbols[jsonData[sect1][levels].length].appendChild(createSub(symblName, tempData, "sym"));
+            jsonData[sect1][levels].push({ "name": symblName, "content": tempData, "type": "symbol" });
+            tempData = "";
+            fake.innerHTML = "Upload another image?";
+            imageName.value = "";
+            selImage.type = "text";
+            selImage.type = "file";
+        }
+        function cancel(hedge, kok) {
+            deleteFile.style.display = hedge;
+            exxit.style.display = hedge;
+            addSymbol.style.display = hedge;
+            clearScreen.style.display = hedge;
+            selImage.style.display = kok;
+            imageName.style.display = kok;
+            fake.style.display = kok;
+            ok.style.display = kok;
+            ok2.style.display = kok;
+            no.style.display = kok;
+            minder.style.display = kok;
+        }
+        function createSub(name, pic, type) {
+            var sub = document.createElement("div");
+            var txt = document.createElement("div");
+            var img = document.createElement("img");
+            sub.title = name;
+            txt.innerHTML = "<span>" + name + "</span>";
+            sub.className = "socksub";
+            txt.className = "symTxt";
+            img.className = "symImg";
+            if (type === "sym") {
+                sub.className = "sub";
+                sub.addEventListener('MSPointerDown', down, false);
+            }
+            img.src = pic;
+            sub.appendChild(img);
+            sub.appendChild(txt);
+            return sub;
+        }
+        function putup(arr, a, b, c, d, e, f, s, t, z, clas, ele, ll) {
+            var i, j, imb;
+            for (j = ll; j < s; j += 1) {
+                for (i = z; i < t; i += 1) {
+                    imb = document.createElement("div");
+                    imb.style.left = a + i * b + (i - 1) * c + "%";
+                    imb.style.top = d + j * e + (j - 1) * f + "%";
+                    imb.className = clas;
+                    arr.push(imb);
+                    ele.appendChild(imb);
+                }
+            }
+        }
+        swap.className = "swapEnable";
+        swap.disabled = false;
+        function compuletu() {
+            this.parentNode.removeChild(this);
+        }
+        var audio = new Audio(), synth = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
+        audio.defaultPlaybackRate = 0.7;
+        function winPlay(spoke) {
+            synth.synthesizeTextToStreamAsync(spoke).then(function (markersStream) {
+                var blob = MSApp.createBlobFromRandomAccessStream(markersStream.ContentType, markersStream);
+                audio.src = URL.createObjectURL(blob, { oneTimeOnly: true });
+                audio.play();
+            });
+        }
+        blocky.style.left = "50%";
+        function swapColor(e) {
+            var speak = "", starImg, ty, tempback;
+            if (senten.length == 0) return;
+            for (ty = 0; ty < senten.length; ty += 1) {
+                speak += senten[ty] + " ";
+                starImg = document.createElement("img");
+                starImg.className = "starImg";
+                starImg.src = "images/twinkle7.gif";
+                starImg.addEventListener('animationend', compuletu, false);
+                conversations[conIndex - senten.length + ty - 1].appendChild(starImg);
+            }
+            winPlay(speak);
+            tempback = player1.style.background;
+            player1.style.background = player2.style.background;
+            player2.style.background = tempback;
+            if (blocky.style.left === "50%") { blocky.style.left = "0%"; }
+            else { blocky.style.left = "50%"; }
+            for (ty = 0; ty < 24; ty += 1) {
+                sentence[e.id].symbols[ty].style.opacity = "0.3";
+                sentence[sentence[e.id].other].symbols[ty].style.opacity = "1.0";
+            }
+            turn = sentence[e.id].other;
+            senten = [];
+            if (sentence[e.id].role === "answer") {
+                levels += 1;
+                if (jsonData.answer.length == levels) {
+                    jsonData.answer.push([]);
+                    jsonData.question.push([]);
+                }
+                loopJson(jsonData.answer[levels], 0, sentence[e.id].symbols);
+                loopJson(jsonData.question[levels], 0, sentence[sentence[e.id].other].symbols);
+                swap.className = "swapEnable";
+                swap.disabled = false;
+            }
+            if (conColor === "orange") conColor = "purple";
+            else conColor = "orange";
+            conIndex = conIndex + (13 - conIndex % 12);
+            if (conIndex > 120) {
+                putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, XX, 13, 1, "socket", tableBox, YY)
+                XX += 1;
+                YY += 1;
+            }
+        }
+        player1.style.background = "radial-gradient(#00FF00, #006400)";
+        player1.style.height = player1.clientWidth + "px";
+        player2.style.background = "radial-gradient(#FF4500, #8B0000)";
+        player2.style.height = player2.clientWidth + "px";
+        function clearAll() {
+            tableBox.innerHTML = "";
+                conversations = [];
+                putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, 11, 13, 1, "socket", tableBox, 1);
+            XX = 12;
+            YY = 11;
+            conIndex = 1;
+            conColor = "purple";
+            senten = [];
+        }
+        function down() {
+            var puss = document.createElement("img");
+            puss.src = this.childNodes[0].src;
+            puss.name = this.title;
+            puss.title = sentence[turn].symbols.indexOf(this.parentNode);
+            puss.id = idd + "d";
+            idd += 1;
+            puss.style.position = "absolute";
+            puss.style.left = this.parentNode.style.left;
+            puss.style.top = this.parentNode.style.top;
+            puss.style.width = symWidth * 2 + "px";
+            puss.style.height = symHeight * 2 + "px";
+            puss.style.opacity = "0.8";
+            puss.style.zIndex = "501";
+            document.body.appendChild(puss);
+            dragIds[puss.id] = [puss, puss.offsetLeft + symWidth, puss.offsetTop + symHeight];
+            puss.addEventListener("MSPointerOut", up, false);
+            puss.addEventListener("MSPointerMove", drag, false);
+        }
+        var tempDelete;
+        function OKdelete(e) {
+            if (e.innerHTML === "YES") {
+                jsonData[sentence[turn].role][levels].splice(parseInt(tempDelete), 1);
+                loopJson(jsonData[sentence[turn].role][levels], 0, sentence[turn].symbols);
+            }
+            popup.style.display = "none";
+            bigblock.style.display = "none";
+            popup.style.animationName = "";
+        }
+
+        function up(event) {
+            if (event.pageX >= binLeft && event.pageX <= binLeft + binWidth && event.pageY >= binTop && event.pageY <= binTop + binHeight) {
+                tempDelete = this.title;
+                popup.style.display = "inline";
+                bigblock.style.display = "inline";
+                popup.style.animationName = "zoom";
+                delete dragIds[this.id];
+                document.body.removeChild(this);
+                return;
+            }
+            if (event.pageX >= tableLeft && event.pageX <= tableLeft + tableWidth && event.pageY >= tableTop && event.pageY <= tableTop + tableHeight) {
+                conversations[conIndex - 1].appendChild(createSub(this.name, this.src, "sock"));
+                conversations[conIndex - 1].childNodes[0].style.border = "2px " + conColor + " solid";
+                tableBox.scrollTop = conversations[conIndex - 1].offsetTop - conBoxHei*1.6;
+                conIndex += 1;
+                if (conIndex > 120) {
+                    putup(conversations, 0, 0.8, 7.2, 0, 2.5, 20, XX, 13, 1, "socket", tableBox, YY)
+                    XX += 1;
+                    YY += 1;
+                }
+                senten.push(this.name);
+                winPlay(this.name);
+                swap.className = "swapDisable";
+                swap.disabled = true;
+            }
+            delete dragIds[this.id];
+            document.body.removeChild(this);
+        }
+        function upDate() {
+            for (var prop in dragIds) {
+                if (dragIds.hasOwnProperty(prop)) {
+                    dragIds[prop][0].style.left = dragIds[prop][1] - symWidth + 'px';
+                    dragIds[prop][0].style.top = dragIds[prop][2] - symHeight + 'px';
+                }
+            }
+            requestAnimationFrame(upDate);
+        }
+        upDate();
+        function drag(event) {
+            dragIds[this.id][1] = event.pageX;
+            dragIds[this.id][2] = event.pageY;
+        }
+    </script>
+</body>
+</html>
